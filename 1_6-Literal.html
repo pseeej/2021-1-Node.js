@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    var a = {
+        'a' : 110,  // member : value
+        'b' : 'hello',
+        'c' : function(){
+            console.log(a);
+            //또는 this.a로 표현 가능
+        }
+    }   //내가 index를 정하고 싶을 때 사용하는 literal 객체
+    //객체를 선언과 동시에 생성이 됨
+    // var a = new Object(); 생략되어있음
+
+    //console.log(typeof a); //object 출력
+
+    Object.prototype.sum = function(){
+        console.log(this.a + 20);
+    }   //sum 함수 추가
+
+    //literal 객체 사용
+    a.c(); //gggg 출력됨
+    console.log(a.a); //110 출력됨
+
+</script>
+</body>
+</html>
