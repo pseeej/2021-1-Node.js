@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width= , initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // callback  
+
+        /*   
+        function test(num, callback) {
+            console.log(num);
+            callback(); //인자로 받은 함수를 실행한다
+        }
+
+        test(1, function(){
+            console.log('콜백함수가 실행됩니다.');
+        })
+        */
+
+        // closure : 함수 내에서 변수를 메모리처럼 사용하는 것
+
+        function ex_cl() {  //어떤 함수를 계속 호출하는데 증가되는 공간이 필요하다 싶을 때 사용
+            var num = 0;    //객체 메모리처럼 사용.
+
+            return function () {
+                num++;
+                console.log(num);
+            }
+        }
+
+        var test = ex_cl();
+        test();
+        test();
+
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    숫자 :
+    <div id = "num"></div>
+    <button id = "plus">증가</button>
+
+    <script>
+        var num = 1;
+        document.addEventListener('DOMContentLoaded', function(){
+            document.querySelector('#num').innerHTML = num;
+        })
+
+        document.querySelector('#plus').addEventListener('click', function(){
+            num++;
+            document.querySelector('#num').innerHTML = num;
+        })
+
+    </script>
+    
+</body>
+</html>
