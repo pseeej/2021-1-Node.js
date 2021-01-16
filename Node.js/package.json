@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon -e js,html 3_4-ViewEngine.js",
+    "start": "npx nodemon -e js,html 3_6-Middleware.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "morgan": "^1.10.0",
     "nunjucks": "^3.2.2"
   }
 }
