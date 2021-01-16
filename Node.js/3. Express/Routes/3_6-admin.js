@@ -25,6 +25,22 @@ router.get('/', testMiddleware, testMiddleware2, (req, res)=>{   //먼저 주소
     res.send('admin 이후 url'); //최종 도달
 });
 
+router.get('/products/write', (req, res)=>{
+    res.render('admin/3_7-write.html', {islogin : true});   //로그인이 되어있을 때 수행하라
+});
+
+router.post('/products/write', (req, res)=>{
+    //res.send('1234512');    //작성하기 누르면 이 숫자 뜸
+    //res.send(req.body.name);    //3_7-write의 id name
+    res.send(req.body); //전체변수
+});
+
+// GET /users : 모든 사용자 정보 가져오기
+// POST /users : 사용자 추가
+// GET /users/(ID) : 한 명만 볼 때
+// PUT /users/(ID) : 한 명 수정
+// DELETE /users/(ID) : 한 명 삭제
+
 router.get('/products', (req, res) =>{
     //res.send('admin products');
     res.render('admin/3_5-products.html', { //response. template에 nunjucks로 뿌려줌

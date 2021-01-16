@@ -1,0 +1,12 @@
+{#
+    href : 링크
+    text : 링크 안에 들어갈 텍스트
+    current_url : 현재 url
+#}
+
+<!-- nunjucks에 link라는 macro 함수 만듦 -->
+{% macro link (href, text, current_url) %}
+<li {% if href == current_url %} class="active" {% endif %}>
+    <a href="{{href}}">{{ text }}</a>
+</li>
+{% endmacro %}
