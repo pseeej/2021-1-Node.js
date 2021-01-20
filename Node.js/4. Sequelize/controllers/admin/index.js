@@ -14,6 +14,8 @@ router.get('/products/edit/:id', ctrl.get_products_edit);   //form 채우기. ur
 
 router.post('/products/edit/:id', ctrl.post_products_edit); //update. action으로 method만 바뀜
 
+router.get('/products/delete/:id', ctrl.get_products_delete);
+
 module.exports = router;
 
 

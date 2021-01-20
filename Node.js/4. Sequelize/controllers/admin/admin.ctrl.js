@@ -57,3 +57,14 @@ exports.post_products_edit = (req, res) => {
         res.redirect('/admin/products/detail/' + req.params.id); //해당 페이지로 이동
     })
 }
+
+exports.get_products_delete = (req, res) => {
+    //SQL에서의 DELETE문이랑 동일한 destroy
+    models.Products.destroy({
+        where : {   //조건 설정
+            id : req.params.id
+        }
+    }).then(()=> {
+        res.redirect('/admin/products');
+    })
+}
