@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
-    Products.prototype.dateFormat = (date) => (
-        moment(date).format('YYYY-MM-DD')
-    );
+    Products.prototype.dateFormat = (date) => {
+        return moment(date).format('YYYY-MM-DD');   //날짜 형식 맞추기
+    };  //이 형식을 그냥 ~ = (date) => (~);로 쓸 수 있음. 이렇게 썼을 땐 안에 return이랑 세미콜론 지워야됨
 
     return Products;
 } 
