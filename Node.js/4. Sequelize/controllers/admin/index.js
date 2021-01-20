@@ -10,6 +10,10 @@ router.post('/products/write', ctrl.post_products_write );
 
 router.get('/products/detail/:id', ctrl.get_products_detail );
 
+router.get('/products/edit/:id', ctrl.get_products_edit);   //form 채우기. url요청, post요청
+
+router.post('/products/edit/:id', ctrl.post_products_edit); //update. action으로 method만 바뀜
+
 module.exports = router;
 
 

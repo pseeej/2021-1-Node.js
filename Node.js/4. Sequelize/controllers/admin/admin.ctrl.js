@@ -36,3 +36,24 @@ exports.get_products_detail = (req, res) => {
         res.render('admin/detail.html', {product : product});  //rendering 시도
     });
 };
+
+exports.get_products_edit = (req, res) => {
+    models.Products.findByPk(req.params.id).then((product) => { //기존에 있던 내용들로 칸을 채워놔야되니깐.
+        res.render('admin/write.html', {product});  //수정하기 창 자체는 작성하기 창이랑 똑같으니깐 write.html 사용해도 됨
+    });
+}
+
+exports.post_products_edit = (req, res) => {
+    //update 조건 두 가지. req body 저장할 데이터, 조건.
+    models.Products.update({ 
+        // 데이터
+        name : req.body.name,
+        price : req.body.price,
+        description : req.body.description
+    },{
+        where : {id : req.params.id}    //특정 아이디일 때 저장하기. (조건)
+    }
+    ).then(()=> {
+        res.redirect('/admin/products/detail/' + req.params.id); //해당 페이지로 이동
+    })
+}

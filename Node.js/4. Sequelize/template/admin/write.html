@@ -3,18 +3,23 @@
  
 {% block content -%}
     <form action="" method="post">
+    {# action을 비워놓음으로써 유동적으로 링크 왔다갔다하면서 바꿀 수 있음 #}
         <table class="table table-bordered">
+        {# value 값 설정해두면 원래의 빈 칸에 채워둘 수 있음 #}
             <tr>
                 <th>제품명</th>
-                <td><input type="text" name="name" class="form-control"/></td>
+                <td><input type="text" name="name" class="form-control"
+                value = "{{product.name}}"></td>
             </tr>
             <tr>
                 <th>가격</th>
-                <td><input type="text" name="price" class="form-control"/></td>
+                <td><input type="text" name="price" class="form-control"
+                value = "{{product.price}}"/></td>
             </tr>
             <tr>
                 <th>설명</th>
-                <td><input type="text" name="description" class="form-control"/></td>
+                <td><input type="text" name="description" class="form-control"
+                value = "{{product.description}}"/></td>
             </tr>
         </table>
         <button class="btn btn-primary">작성하기</button>
