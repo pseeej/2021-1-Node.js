@@ -29,3 +29,10 @@ exports.post_products_write = ( req , res ) => {
         res.redirect('/admin/products');    //다 하고 나서 main page로 이동해서 list를 보고 싶다. redirect 사용.
     });
 }   //다 하고 workbench 들어가서 products 확인하면 입력된 거 들어가있음
+
+exports.get_products_detail = (req, res) => {
+    //req.params.id로 바뀌는 id 받을 수 있음.
+    models.Products.findByPk(req.params.id).then((product)=>{   //primary key로 찾은 다음에
+        res.render('admin/detail.html', {product : product});  //rendering 시도
+    });
+};
