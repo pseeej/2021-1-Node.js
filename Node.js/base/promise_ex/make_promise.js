@@ -6,15 +6,15 @@
 // ex) 인증 성공하면 resolve, 실패하면 reject
 
 const wait1second = new Promise((resolve, reject) => {
-    console.log('시작');
-    setTimeout(()=>{
-        resolve(console.log('1초 뒤에 찍습니다'));
-    }, 1000)
+    
+    reject('에러');
 
 });
 
 wait1second.then((result)=> {
     console.log("프라미스 이행 완료");
+}).catch((err)=> {  //catch로 reject 받아올 수 있음.
+    console.log(err);
 });
 
 //시작 -> 1초 뒤에 찍습니다 -> 프라미스 시행 완료
