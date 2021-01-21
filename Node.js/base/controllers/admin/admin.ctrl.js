@@ -32,9 +32,15 @@ exports.post_products_write = ( req , res ) => {
 
 exports.get_products_detail = (req, res) => {
     //req.params.id로 바뀌는 id 받을 수 있음.
-    models.Products.findByPk(req.params.id).then((product)=>{   //primary key로 찾은 다음에
-        res.render('admin/detail.html', {product : product});  //rendering 시도
+    const product1 = models.Products.findByPk(req.params.id).then((product)=>{   //primary key로 찾은 다음에
+        
     });
+
+    const product2 = models.Products.findByPk(req.params.id).then((product)=>{   //primary key로 찾은 다음에
+
+    });
+
+    res.render('admin/detail.html', {product1:product1, product2:product2});
 };
 
 exports.get_products_edit = (req, res) => {
