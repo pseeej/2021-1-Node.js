@@ -1,0 +1,19 @@
+{% set title = 작성하기 %}
+{% extends "layout/base.html" %}
+ 
+{% block content -%}
+    <form action="" method="post">
+        <table class="table table-bordered">
+            <tr>
+                <th>제목</th>
+                <td><input type="text" name="name" class="form-control" value="{{ product.name }}"/></td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td><textarea name="description" class="form-control">{{ product.description }}</textarea></td>
+            </tr>
+        </table>
+        <button class="btn btn-primary">작성하기</button>
+    </form>
+
+{% endblock %}

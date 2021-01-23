@@ -1,0 +1,17 @@
+{% set title = 작성하기 %}
+{% extends "layout/base.html" %}
+ 
+{% block content -%}
+    <div class="col-sm-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ product.name }}
+            </div>
+            <div class="panel-body">
+                {{ product.description }}
+            </div>
+        </div>
+        <a href="/" class="btn btn-default">목록으로</a>
+        <a href="/edit/{{ product.id }}" class="btn btn-primary">수정</a>
+    </div>
+{% endblock %}
