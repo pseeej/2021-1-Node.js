@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var path = require('path');
 var fs = require('fs');
-var dotenv = require('dotenv'); //dotenv 가져오기
+var dotenv = require('../../node_modules/dotenv'); //dotenv 가져오기
 
 dotenv.config(); //LOAD CONFIG
 
