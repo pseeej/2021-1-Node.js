@@ -18,7 +18,8 @@
                 {{ product.description }}
             </td>
             <td>
-                <a href="/delete/{{ product.id }}" class="btn btn-danger">삭제</a>
+            {# return confirm으로 alert 창 뜨게 함 #}
+                <a href="/delete/{{ product.id }}" onclick="return confirm('삭제하시겠습니까?')" class="btn btn-danger">삭제</a>
             </td>
         </tr>
         {% endfor %}

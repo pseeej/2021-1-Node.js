@@ -15,7 +15,8 @@ process.env.DB_USER, process.env.DB_PASSWORD,{
         max: 5,
         min: 0,
         idle: 10000
-    }
+    },
+    logging : false //이렇게 해두면 sql문 안 뜨지롱. select나,,, 뭐나,,, 나중에 보고 싶으면 true로 바꾸거나 걍 지워
 });
 
 let db = [];
