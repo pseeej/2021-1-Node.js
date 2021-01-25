@@ -2,16 +2,36 @@ const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const { buildSchema, graphql } = require('graphql');
 
-const schema = buildSchema(`
+//DB처럼 한 줄에 schema 만들기. !는 필수라는 뜻
+const schema = buildSchema(`   
+
+    type Product {
+        id : ID!
+        name : String
+        price : Int
+        description : String
+    }
+
     type Query{
-        hello : String,
-        nodejs : Int
+        getProduct(id : ID!) : Product
     }
 `);
 
+const products = [{ //임시 데이터 만들어줌
+    id : 1,
+    name : '첫번째 제품',
+    price : 2000,
+    description : '희희'
+}, {
+    id : 2,
+    name : '두 번째 제품',
+    price : 4000,
+    description : '와하학'
+}]
+
+//입력 방식 : { getProduct(id : 1) { name \n price } }
 const root = {
-    hello : () => 'hello world',
-    nodejs : () => 20
+    getProduct : ({ id }) => products.find(product => product.id === parseInt(id))    //내가 입력한 product id랑 일치하는 id의 제품을 한 줄 가져올거임
 }
 
 const app = express();
