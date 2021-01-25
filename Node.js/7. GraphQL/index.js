@@ -71,6 +71,8 @@ app.use('/graphql', graphqlHTTP({   //url graphql로 통일
     graphiql : true //GUI 제공함으로써 query 사용 가능하게 함   와우 신기한 창이 뜨네
 }));
 
+app.use('/static', express.static('static'));
+
 app.listen(4000, ()=>{  //여기서 4000은 portnum
     console.log('running server port 4000');
 });
