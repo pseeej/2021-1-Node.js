@@ -1,0 +1,18 @@
+
+가상 환경 설정 및 패키지 설치
+
+- 설치 : pip install simplejson : simplejson이라는 거 깔 거임
+- 삭제 : pip uninstall simplejson : 삭제
+
+- 설치된 package 확인 : pip list
+
+- update : pip install --upgrade simplejson : 가장 최신 버전으로 업그레이드
+
+- 가상환경 실행 : activate
+- 가상환경에서 빠져나오기 : deactivate
+
+- 검색 : pip search ~ : ~에는 뭐든 들어갈 수 있음. simplejson이라거나, 아니면 simple이 들어간 모든 걸 찾는 simple*이거나,,,
+
+- vscode 연동 : 그냥 터미널에서 code 입력
+
+- 패키지 정보 확인 : pip show simplejson : simplejson에 대한 정보 와다ㅏ다다 띄워짐
