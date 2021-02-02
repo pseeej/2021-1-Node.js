@@ -4,6 +4,8 @@
 - 설치 : pip install simplejson : simplejson이라는 거 깔 거임
 - 삭제 : pip uninstall simplejson : 삭제
 
+// simplejson 깔고 나서 아래 것들은 모두 scripts 파일에서 실행하는겨
+
 - 설치된 package 확인 : pip list
 
 - update : pip install --upgrade simplejson : 가장 최신 버전으로 업그레이드
