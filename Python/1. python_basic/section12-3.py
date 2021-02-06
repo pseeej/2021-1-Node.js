@@ -31,7 +31,7 @@ c.execute("DELETE FROM users WHERE id = ?", (2,))
 c.execute("DELETE FROM users WHERE id = :id", {"id":5})
 
 # Row Delete 3
-c.execute("DELETE FROM users WHERE id = '%s" %4)
+c.execute("DELETE FROM users WHERE id = '%s'" % 4)
 
 print()
 
@@ -45,5 +45,5 @@ print("users db deleted : ", conn.execute("DELETE FROM users").rowcount, "rows")
 # 커밋
 conn.commit()
 
-# 점속 해제
+# 접속 해제
 conn.close()
