@@ -3,3 +3,22 @@
 <div>
     {{ question.content }}
 </div>
+
+<!-- 답변 확인 영역 -->
+<h5>{{ question.answer_set|length }}개의 답변이 있습니다.</h5>
+<div>
+    <ul>
+        {% for answer in question.answer_set %}
+            <li> {{answer.content}}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- 답변 데이터 저장 위함 -->
+<!-- 답변 저장 url은 form element의 action에 있는 url_for가 알려줌 -->
+<form action="{{url_for('answer.create', question_id=question.id)}}" method="post">
+    <textarea name="content" id="content" rows="15"></textarea>
+
+    <!-- 답변등록 버튼 누르면 post 방식으로 form element의 action 속성에 등록된 url 호출됨 -->
+    <input type="submit" value="답변등록">
+</form>
