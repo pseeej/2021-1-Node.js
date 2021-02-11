@@ -1,0 +1,17 @@
+<!-- render_template 함수에서 전달받은 question_list 있는지 검사 -->
+{% if question_list %}
+
+    <ul>
+    <!-- question_list에 저장된 데이터 하나씩 꺼내서 question 객체에 대입 -->
+    {% for question in question_list %}
+        <!-- for문에서 얻은 question 객체의 id 이용해서 link 생성. -->
+        <!-- 화면 자체에는 question.subject 출력되게 함. 질문 개수만큼 화면에 나옴 -->
+        <!-- 템플릿에서 질문 상세를 호출하는 코드 url_for 이용해서 설정된 함수명 url 역으로 찾아주게 함 -->
+        <li><a href="{{url_for('question.detail', question_id=question.id)}}">{{question.subject}}</a></li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <p> 질문이 없습니다.</p>
+
+{% endif %}
