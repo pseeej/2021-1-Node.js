@@ -7,6 +7,7 @@
 
 <!-- my-3 : m은 margin, y는 y축을 의미. 위아래 방향으로 부트스트랩 기준 3정도의 마진-->
 <div class="container my-3">
+
     <!-- py-2 : p는 padding. 위아래 방향으로 부트스트랩 기준 2 정도의 패딩 -->
     <h2 class="border-bottom py-2">{{ question.subject }}</h2>
     <div class="card my-3">
@@ -22,7 +23,9 @@
             </div>
         </div>
     </div>
+
     <h5 class="border-bottom my-3 py-2">{{ question.answer_set|length }}개의 답변이 있습니다.</h5>
+
     {% for answer in question.answer_set %}
     <div class="card my-3">
         <div class="card-body">
@@ -35,7 +38,20 @@
         </div>
     </div>
     {% endfor %}
+
     <form action="{{ url_for('answer.create', question_id=question.id) }}" method="post" class="my-3">
+        
+    <!-- CSRF 토큰과 필수 항목 입력 오류 표시 기능 추가 -->
+    {{ form.csrf_token }}
+
+    <!-- 오류 표시 -->
+    {% for field, errors in form.errors.items() %}
+    <div class="alert alert-danger" role="alert">
+        <strong>{{ form[field].label }}</strong> : {{ ', '.join(errors) }}
+    </div>
+    {% endfor %}
+    <!-- 오류 표시 끝 -->
+    
         <div class="form-group">
             <textarea name="content" id="content" class="form-control" rows="10"></textarea>
         </div>

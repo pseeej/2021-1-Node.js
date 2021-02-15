@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+    <form method="post" class="post-form my-3">
+
+        <!-- CSRF : 보안 관련 항목. form element를 통해 전송된 데이터가 실제 웹 사이트에서 만들어진 데이터인지 검증하는 데에 필요 -->
+        <!-- CSRF 토큰 오류 처리 -->
+        {{ form.csrf_token }}
+
+        <!-- 오류 표시 시작 -->
+        <!-- create 함수에서 form.validate_on_submit이 false 반환하면 추가한 영역에 오류 표시되고 폼에 오류 내용 자동 등록됨 -->
+        <!-- 등록된 오류 정보는 form.errors 속성으로 표시 가능 -->
+        {% for field, errors in form.errors.items() %}
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ form[field].label }}</strong> : {{', '.join(errors)}}
+        </div>
+        {% endfor %}
+        <!-- 오류 표시 끝 -->
+
+        <!-- 코드 직접 작성함으로써 내가 원하는 디자인, 엘리먼트, 속성 추가 -->
+        <div class="form-group">
+            <label for="subject">제목</label>
+            <!-- value 값으로 {{ form.subject.data or '' }} 입력하면 이미 전송한 데이터가 다시 설정됨-->
+            <!-- 이 때 ''는 현재 템플릿이 get 방식으로 요청되는 경우 기존 입력값이 없으므로(none으로 출력) 이를 방지하기 위해서 사용됨 -->
+            <input type="text" class="form-control" name="subject" id="subject"
+            value="{{ form.subject.data or '' }}">
+        </div>
+        <div class="form-group">
+            <label for="content">내용</label>
+            <textarea class="form-control" name="content" id="content" rows="5">
+                {{ form.content.data or '' }}
+            </textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">저장하기</button>
+    </form>
+</div>
+{% endblock %}

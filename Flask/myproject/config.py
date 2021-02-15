@@ -10,6 +10,9 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///{}'.format(os.path.join(BASE_DIR, 'pybo.db'
 # SQLALCHEMY 이벤트 처리 옵션.
 SQLALCHEMY_TRACK_MODIFICATIONS=False
 
+# 웹 사이트 취약점 공격 방지 위해 사용.
+SECRET_KEY = "dev"
+
 # flask db init으로 db 관리하는 초기 파일들을 migrations 디렉터리에 자동으로 생성해줌
 # 최초 한 번만 수행하면 됨
 
