@@ -1,4 +1,10 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+<!-- base.html 상속 -->
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- 아래거 대신에 위에 거 작성. base.html에 아래 내용 다 포함되어있음~ -->
+<!--link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}"-->
+
 <!-- my-3 : m은 margin, y는 y축을 의미. 위아래 방향으로 부트스트랩 기준 3정도의 마진-->
 <div class="container my-3">
     <!-- py-2 : p는 padding. 위아래 방향으로 부트스트랩 기준 2 정도의 패딩 -->
@@ -36,3 +42,5 @@
         <input type="submit" value="답변등록" class="btn btn-primary">
     </form>
 </div>
+
+{% endblock %}

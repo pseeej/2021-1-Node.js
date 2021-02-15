@@ -1,4 +1,8 @@
-<link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css')}}">
+<!-- base.html 상속 -->
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- question_list.html에서만 사용할 내용 작성 -->
 <div class="container my-3">
     <table class="table">
         <thead>
@@ -29,3 +33,5 @@
         </tbody>
     </table>
 </div>
+
+{% endblock %}

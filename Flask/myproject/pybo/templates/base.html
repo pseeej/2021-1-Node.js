@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css')}}">
+    <!-- Pybo CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <title>Hello, Pybo!</title>
+</head>
+<body>
+    <!-- 기본 템플릿 안에 삽입될 내용 start -->
+    <!-- base.html 템플릿 파일을 상속한 파일에서 구현해야 할 영역 -->
+    {% block content %}
+    {% endblock %}
+    <!-- 기본 템플릿 안에 삽입될 내용 End -->
+</body>
+</html>
