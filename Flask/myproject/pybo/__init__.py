@@ -27,4 +27,8 @@ def create_app():   # application factory. flask 내부에서 정의된 함수�
     app.register_blueprint(question_views.bp)   # question_views의 bp 객체 등록
     app.register_blueprint(answer_views.bp)
 
+    from .filter import format_datetime
+    # 필터 등록
+    app.jinja_env.filters['datetime'] = format_datetime
+
     return app  # app 객체 반환

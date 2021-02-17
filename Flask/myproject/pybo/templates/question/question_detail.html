@@ -18,7 +18,7 @@
             <div class="d-flex justify-content-end">
                 <!-- p-2 : p는 padding. 상하좌우 방향으로 부트스트랩 기준 2 정도의 패딩 -->
                 <div class="badge badge-light p-2">
-                    {{ question.create_date }}
+                    {{ question.create_date | datetime }}
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
             <div class="d-flex justify-content-end">
                 <div class="badge badge-light p-2">
-                    {{ answer.create_date }}
+                    {{ answer.create_date | datetime }}
                 </div>
             </div>
         </div>
