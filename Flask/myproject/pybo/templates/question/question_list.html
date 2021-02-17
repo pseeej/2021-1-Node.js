@@ -17,7 +17,9 @@
             <!-- 현재 조회된 질문목록 데이터 가져오기 위해 question_list.items 호출 -->
             {% for question in question_list.items %}
             <tr>
-                <td>{{loop.index}}</td>
+                <!-- 게시물 번호 공식 적용. -->
+                <!-- 번호 = 전체 게시물 개수 - (현재 페이지 - 1) * 페이지당 게시물 개수 - 나열 인덱스 -->
+                <td>{{ question_list.total - ((question_list.page-1) * question_list.per_page) - loop.index0 }}</td>
                 <td>
                     <a href="{{url_for('question.detail', question_id=question.id)}}">
                         {{question.subject}}
