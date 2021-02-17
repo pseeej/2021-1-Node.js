@@ -19,7 +19,12 @@ bp = Blueprint('question',  __name__, url_prefix='/question')
 # 그냥 list는 python의 예약어라서 사용 불가하므로.
 # 질문 목록 받아오기. order_by로 작성일자 기준 역순으로 정렬
 def _list():
+    # localhost:5000/question/list/?page=5에서 5 가져오려고 할 때 사용하는 바로 아래 함수 request.args.get
+    page = request.args.get('page', type=int, default=1)    # 페이징 기능 구현
     question_list = Question.query.order_by(Question.create_date.desc())
+    # paginate 함수로 페이징 적용. paginate(현재 조회할 페이지의 번호, 페이지마다 보여 줄 게시물의 개수)
+    # 해당 함수의 반환값은 Pagination 객체. 페이징 처리를 쉽게 만들어줌
+    question_list = question_list.paginate(page, per_page=10)
     return render_template('question/question_list.html', question_list=question_list)
 
 
