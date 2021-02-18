@@ -27,3 +27,12 @@ class Answer(db.Model):
     
     content = db.Column(db.Text(), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
+
+# User 모델 생성
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)    # 자동으로 증가하는 user 모델의 기본 키
+    # nullable = False : null값 허용하지 않음
+    # unique = True : 같은 값을 저장할 수 없다. 이렇게 해야 중복되어 저장되지 않음
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
