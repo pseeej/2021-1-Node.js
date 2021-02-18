@@ -24,6 +24,11 @@
                     <a href="{{url_for('question.detail', question_id=question.id)}}">
                         {{question.subject}}
                     </a>
+
+                    <!-- 게시물 제목 오른쪽에 답변 개수 표시하기 -->
+                    {% if question.answer_set|length > 0 %}
+                    <span class="text-danger small ml-2">{{ question.answer_set|length }}</span>
+                    {% endif %}
                 </td>
                 <!-- datetime 필터 적용. __init__의 app.jinja_env.filters['datetime']에 의해 format_datetime 필터 함수 실행됨 -->
                 <td>{{question.create_date|datetime}}</td>
