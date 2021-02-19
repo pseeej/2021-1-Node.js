@@ -2,13 +2,14 @@
 
 from datetime import datetime
 
-from flask import Blueprint, render_template, request, url_for
+from flask import Blueprint, render_template, request, url_for, g
 from werkzeug.utils import redirect
 
 from .. import db
 
 from ..models import Question
 from ..forms import QuestionForm, AnswerForm
+from pybo.views.auth_views import login_required
 
 # 블루프린트 객체 생성할 때 question 이름 사용.
 # url_prefix = question 사용함으로써 main_views의 url_prefix='/'와는 차이 둠
@@ -42,6 +43,10 @@ def detail(question_id):
 # methods=('GET', 'POST')로 질문 전송 방식 수정. default는 get만 가능.
 # methods 작성함으로써 질문 등록 라우트에 get이랑 post 방식 포함됨
 @bp.route('/create/', methods=('GET', 'POST'))
+
+# auth_views.py에 속해있는 이 함수 실행함으로써 로그인 여부 확인
+@login_required
+
 def create():
     form=QuestionForm() # QuestionForm 클래스의 객체 form 생성
 
@@ -50,7 +55,7 @@ def create():
     # 이상이 없을 경우
     if request.method=='POST' and form.validate_on_submit():
         # 질문 1건 생성
-        question = Question(subject=form.subject.data, content=form.content.data, create_date=datetime.now())
+        question = Question(subject=form.subject.data, content=form.content.data, create_date=datetime.now(), user=g.user)
         # db에 저장
         db.session.add(question)
         db.session.commit()

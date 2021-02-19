@@ -53,7 +53,9 @@
     <!-- 오류 표시 끝 -->
     
         <div class="form-group">
-            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+            <!-- disabled 설정함으로써 로그인 안 되어있으면 textarea 비활성화시킴 -->
+            <textarea {% if not g.user %}disabled{% endif %}
+             name="content" id="content" class="form-control" rows="10"></textarea>
         </div>
         <input type="submit" value="답변등록" class="btn btn-primary">
     </form>

@@ -2,18 +2,23 @@
 
 from datetime import datetime
 
-from flask import Blueprint, url_for, request, render_template
+from flask import Blueprint, url_for, request, render_template, g
 from werkzeug.utils import redirect
 
 from .. import db
 from ..forms import AnswerForm
 from ..models import Question, Answer
+from .auth_views import login_required
 
 bp = Blueprint('answer', __name__, url_prefix='/answer')
 
 # 답변 등록 라우트 함수
 # question_detail.html에서 정의한 form의 method가 post였으므로 여기서도 동일하게 맞춰줘야함
 @bp.route('/create/<int:question_id>', methods=('POST',))
+
+# auth_views.py에 속해있는 이 함수 실행함으로써 로그인 여부 확인
+@login_required
+
 # question_id는 url에서 전달됨
 def create(question_id):
     form = AnswerForm()
@@ -21,7 +26,8 @@ def create(question_id):
     if form.validate_on_submit():   # 답변 등록에 문제 없으면
         # request.form['content'] == post 폼 방식으로 전송된 데이터 항목 중 name 속성이 content인 값
         content = request.form['content']
-        answer = Answer(content=content, create_date=datetime.now())
+        # user = g.user로 작성자 정보 추가
+        answer = Answer(content=content, create_date=datetime.now(), user=g.user)
         # question.answer_set은 질문에 달린 답변들을 의미.
         # question과 answer 모델이 연결되어 있어 backref에 설정한 answer_set 사용 가능
         question.answer_set.append(answer)

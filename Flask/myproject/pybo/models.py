@@ -12,6 +12,13 @@ class Question(db.Model):   # 모든 모델의 기본 클래스인 db.Model 상�
     content = db.Column(db.Text(), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
 
+    # question model에 user_id, user field 추가
+    # user_id : User model data의 id값을 Question model에 포함시키기 위함
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
+    # user : Question model에서 User model을 참조하기 위한 field
+    # backref로 User model data 통해 Question model data 참조
+    user = db.relationship('User', backref=db.backref('question_set'))
+
 # 답변 모델 생성
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -27,6 +34,10 @@ class Answer(db.Model):
     
     content = db.Column(db.Text(), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
+
+    # answer model에 field 추가
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
+    user = db.relationship('User', backref=db.backref('answer_set'))
 
 # User 모델 생성
 class User(db.Model):
