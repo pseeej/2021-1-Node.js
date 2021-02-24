@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from flask import Blueprint, url_for, request, render_template, g
+from flask import Blueprint, url_for, request, render_template, g, flash
 from werkzeug.utils import redirect
 
 from .. import db
@@ -15,10 +15,8 @@ bp = Blueprint('answer', __name__, url_prefix='/answer')
 # 답변 등록 라우트 함수
 # question_detail.html에서 정의한 form의 method가 post였으므로 여기서도 동일하게 맞춰줘야함
 @bp.route('/create/<int:question_id>', methods=('POST',))
-
 # auth_views.py에 속해있는 이 함수 실행함으로써 로그인 여부 확인
 @login_required
-
 # question_id는 url에서 전달됨
 def create(question_id):
     form = AnswerForm()
@@ -36,3 +34,36 @@ def create(question_id):
         
     # 답변 생성 후 화면 이동하도록 redirect 함수 사용함
     return redirect(url_for('question/question.detail', question=question, form=form))
+
+
+# 답변 수정
+@bp.route('/modify/<int:answer_id>', methods=('GET', 'POST'))
+@login_required
+def modify(answer_id):
+    answer  = Answer.query.get_or_404(answer_id)
+    if g.user != answer.user:
+        flash('수정 권한이 없습니다')
+        return redirect(url_for('question.detail', question_id=answer.question.id))
+    if request.method == 'POST':    # 수정 내용 게시
+        form = AnswerForm()
+        if form.validate_on_submit(): # 수정된 항목이 문제가 없으면
+            form.populate_obj(answer)   # form 변수에 있는 데이터를 question 객체에 적용
+            answer.modify_date = datetime.now() # 수정 일시 저장
+            db.session.commit()
+            return redirect(url_for('question.detail', question_id = answer.question.id))
+    else:   # 기존 답변 내용 불러오기
+        form = AnswerForm(obj=answer)
+    return render_template('answer/answer_form.html', answer=answer, form=form)
+
+# 답변 삭제
+@bp.route('/delete/<int:answer_id>')
+@login_required
+def delete(answer_id):
+    answer = Answer.query.get_or_404(answer_id)
+    question_id = answer.question.id
+    if g.user != answer.user :
+        flash('삭제 권한이 없습니다')
+    else:
+        db.session.delete(answer)
+        db.session.commit()
+    return redirect(url_for('question.detail', question_id=question_id))

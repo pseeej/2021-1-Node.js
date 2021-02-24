@@ -11,6 +11,7 @@ class Question(db.Model):   # 모든 모델의 기본 클래스인 db.Model 상�
     subject = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text(), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
+    modify_date = db.Column(db.DateTime(), nullable=True)
 
     # question model에 user_id, user field 추가
     # user_id : User model data의 id값을 Question model에 포함시키기 위함
@@ -34,6 +35,7 @@ class Answer(db.Model):
     
     content = db.Column(db.Text(), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
+    modify_date = db.Column(db.DateTime(), nullable=True)
 
     # answer model에 field 추가
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)

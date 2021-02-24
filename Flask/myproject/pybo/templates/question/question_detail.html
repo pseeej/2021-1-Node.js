@@ -16,12 +16,31 @@
             <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
             <!-- d-flex-justify-content-end : 컴포넌트 오른쪽 정렬 -->
             <div class="d-flex justify-content-end">
+                <!-- 작성일시 왼쪽에 수정일시 추가 -->
+                {% if question.modify_date %}
+                <div class="badge badge-light p-2 text-left mx-3">
+                    <div class="mb-2">modified at</div>
+                    <div>{{ question.modify_date|datetime }}</div>
+                </div>
+                {% endif %}
+
                 <!-- p-2 : p는 padding. 상하좌우 방향으로 부트스트랩 기준 2 정도의 패딩 -->
                 <div class="badge badge-light p-2 text-left">
                     <div class="mb-2">{{ question.user.username }}</div>
                     <div>{{ question.create_date | datetime }}</div>
                 </div>
             </div>
+
+            <!-- 질문 수정, 삭제 버튼 추가. 로그인한 사용자와 글쓴이가 같은 경우에만 보여야 함 -->
+            {% if g.user == question.user %}
+            <div class="my-3">
+                <a href="{{ url_for('question.modify', question_id=question.id) }}"
+                class = "btn btn-sm btn-outline-secondary">수정</a>
+                <!-- jQuery에서 $(this).data('uri') 받으려고 data-uri 속성 추가 -->
+                <a href="#" class="delete btn btn-sm btn-outline-secondary"
+                data-uri="{{ url_for('question.delete', question_id=question.id) }}">삭제</a>
+            </div>
+            {% endif %}
         </div>
     </div>
 
@@ -32,11 +51,28 @@
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
             <div class="d-flex justify-content-end">
+
+                {% if answer.modify_date %}
+                <div class="badge badge-light p-2 text-left mx-3">
+                    <div class="mb-2">modified at</div>
+                    <div>{{ answer.modify_date|datetime }}</div>
+                </div>
+                {% endif %}
+
                 <div class="badge badge-light p-2 text-left">
                     <div class="mb-2">{{ answer.user.username }}</div>
                     <div>{{ answer.create_date | datetime }}</div>
                 </div>
             </div>
+            <!-- 답변 수정 버튼, 삭제 버튼 추가 -->
+            {% if g.user == answer.user %}
+            <div class="my-3">
+                <a href="{{ url_for('answer.modify', answer_id = answer.id) }}"
+                class = "btn btn-sm btn-outline-secondary">수정</a>
+                <a href="#" class="delete btn btn-sm btn-outline-secondary"
+                data-uri="{{ url_for('answer.delete', answer_id = answer.id) }}">삭제</a>
+            </div>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
@@ -63,4 +99,16 @@
     </form>
 </div>
 
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+$(document).ready(function(){
+    $(".delete").on('click', function(){
+        if(confirm("정말로 삭제하시겠습니까?")){
+            location.href = $(this).data('uri');
+        }
+    });
+});
+</script>
 {% endblock %}
