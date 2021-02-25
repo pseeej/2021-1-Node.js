@@ -94,7 +94,7 @@ def delete(question_id):
     question = Question.query.get_or_404(question_id)
     if g.user != question.user:
         flash('삭제 권한이 없습니다')
-        return redirect(url_for('queestion.detail', question_id=question_id))
+        return redirect(url_for('question.detail', question_id=question_id))
     db.session.delete(question)
     db.session.commit()
     return redirect(url_for('question._list'))

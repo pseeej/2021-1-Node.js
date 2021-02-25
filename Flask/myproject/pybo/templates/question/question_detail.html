@@ -35,50 +35,105 @@
             {% if g.user == question.user %}
             <div class="my-3">
                 <a href="{{ url_for('question.modify', question_id=question.id) }}"
-                class = "btn btn-sm btn-outline-secondary">수정</a>
+                    class="btn btn-sm btn-outline-secondary">수정</a>
                 <!-- jQuery에서 $(this).data('uri') 받으려고 data-uri 속성 추가 -->
                 <a href="#" class="delete btn btn-sm btn-outline-secondary"
-                data-uri="{{ url_for('question.delete', question_id=question.id) }}">삭제</a>
+                    data-uri="{{ url_for('question.delete', question_id=question.id) }}">삭제</a>
             </div>
             {% endif %}
+
+
+            <!-- 질문 댓글 -->
+            {% if question.comment_set|length > 0 %}
+            <div class="mt-3">
+                {% for comment in question.comment_set %}
+                <div class="comment py-2 text-muted">
+                    <span style="white-space: pre-line;">{{ comment.content }}</span>
+                    <span>
+                        - {{ comment.user.username }}, {{ comment.create_date|datetime }}
+                        {% if comment.modify_date %}
+                        (수정:{{ comment.modify_date|datetime }})
+                        {% endif %}
+                    </span>
+                    {% if g.user == comment.user %}
+                    <a href="{{ url_for('comment.modify_question', comment_id=comment.id) }}" class="small">수정</a>
+                    <a href="#" class="small delete"
+                        data-uri="{{ url_for('comment.delete_question', comment_id=comment.id) }}">삭제</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div>
+                <a href="{{ url_for('comment.create_question', question_id=question.id) }}" class="small"><small>댓글 추가
+                        ..</small></a>
+            </div>
+
+            <!-- 답변 댓글 -->
+            {% if answer.comment_set|length > 0 %}
+            <div class="mt-3">
+                {% for comment in answer.comment_set %}
+                <div class="comment py-2 text-muted">
+                    <span style="white-space: pre-line;">{{ comment.content }}</span>
+                    <span>
+                        - {{ comment.user.username }}, {{ comment.create_date|datetime }}
+                        {% if comment.modify_date %}
+                        (수정 : {{ comment.modify_date|datetime }})
+                        {% endif %}
+                    </span>
+                    {% if g.user == comment.user %}
+                    <a href="{{ url_for('comment.modify_answer', comment_id=comment.id) }}" class="small">수정</a>,
+                    <a href="#" class="small delete"
+                        data-uri="{{ url_for('comment.delete_answer', comment_id=comment.id) }}">삭제</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div>
+                <a href="{{ url_for('comment.create_answer', answer_id=answer.id) }}" class="small"><small>댓글 추가
+                        ..</small></a>
+            </div>
         </div>
     </div>
+</div>
+</div>
 
-    <h5 class="border-bottom my-3 py-2">{{ question.answer_set|length }}개의 답변이 있습니다.</h5>
+<h5 class="border-bottom my-3 py-2">{{ question.answer_set|length }}개의 답변이 있습니다.</h5>
 
-    {% for answer in question.answer_set %}
-    <div class="card my-3">
-        <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
-            <div class="d-flex justify-content-end">
+{% for answer in question.answer_set %}
+<div class="card my-3">
+    <div class="card-body">
+        <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
+        <div class="d-flex justify-content-end">
 
-                {% if answer.modify_date %}
-                <div class="badge badge-light p-2 text-left mx-3">
-                    <div class="mb-2">modified at</div>
-                    <div>{{ answer.modify_date|datetime }}</div>
-                </div>
-                {% endif %}
-
-                <div class="badge badge-light p-2 text-left">
-                    <div class="mb-2">{{ answer.user.username }}</div>
-                    <div>{{ answer.create_date | datetime }}</div>
-                </div>
+            {% if answer.modify_date %}
+            <div class="badge badge-light p-2 text-left mx-3">
+                <div class="mb-2">modified at</div>
+                <div>{{ answer.modify_date|datetime }}</div>
             </div>
-            <!-- 답변 수정 버튼, 삭제 버튼 추가 -->
-            {% if g.user == answer.user %}
-            <div class="my-3">
-                <a href="{{ url_for('answer.modify', answer_id = answer.id) }}"
-                class = "btn btn-sm btn-outline-secondary">수정</a>
-                <a href="#" class="delete btn btn-sm btn-outline-secondary"
+            {% endif %}
+
+            <div class="badge badge-light p-2 text-left">
+                <div class="mb-2">{{ answer.user.username }}</div>
+                <div>{{ answer.create_date | datetime }}</div>
+            </div>
+        </div>
+        <!-- 답변 수정 버튼, 삭제 버튼 추가 -->
+        {% if g.user == answer.user %}
+        <div class="my-3">
+            <a href="{{ url_for('answer.modify', answer_id = answer.id) }}"
+                class="btn btn-sm btn-outline-secondary">수정</a>
+            <a href="#" class="delete btn btn-sm btn-outline-secondary"
                 data-uri="{{ url_for('answer.delete', answer_id = answer.id) }}">삭제</a>
-            </div>
-            {% endif %}
         </div>
+        {% endif %}
     </div>
-    {% endfor %}
+</div>
+{% endfor %}
 
-    <form action="{{ url_for('answer.create', question_id=question.id) }}" method="post" class="my-3">
-        
+<form action="{{ url_for('answer.create', question_id=question.id) }}" method="post" class="my-3">
+
     <!-- CSRF 토큰과 필수 항목 입력 오류 표시 기능 추가 -->
     {{ form.csrf_token }}
 
@@ -89,26 +144,26 @@
     </div>
     {% endfor %}
     <!-- 오류 표시 끝 -->
-    
-        <div class="form-group">
-            <!-- disabled 설정함으로써 로그인 안 되어있으면 textarea 비활성화시킴 -->
-            <textarea {% if not g.user %}disabled{% endif %}
-             name="content" id="content" class="form-control" rows="10"></textarea>
-        </div>
-        <input type="submit" value="답변등록" class="btn btn-primary">
-    </form>
+
+    <div class="form-group">
+        <!-- disabled 설정함으로써 로그인 안 되어있으면 textarea 비활성화시킴 -->
+        <textarea {% if not g.user %}disabled{% endif %} name="content" id="content" class="form-control"
+            rows="10"></textarea>
+    </div>
+    <input type="submit" value="답변등록" class="btn btn-primary">
+</form>
 </div>
 
 {% endblock %}
 
 {% block script %}
 <script type='text/javascript'>
-$(document).ready(function(){
-    $(".delete").on('click', function(){
-        if(confirm("정말로 삭제하시겠습니까?")){
-            location.href = $(this).data('uri');
-        }
+    $(document).ready(function () {
+        $(".delete").on('click', function () {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                location.href = $(this).data('uri');
+            }
+        });
     });
-});
 </script>
 {% endblock %}
