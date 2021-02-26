@@ -35,13 +35,14 @@ def create_app():   # application factory. flask 내부에서 정의된 함수�
     from . import models
 
     # 플라스크 앱 생성 시 블루프린트 적용하기
-    from .views import main_views, question_views, answer_views, auth_views, comment_views
+    from .views import main_views, question_views, answer_views, auth_views, comment_views, vote_views
 
     app.register_blueprint(main_views.bp)
     app.register_blueprint(question_views.bp)   # question_views의 bp 객체 등록
     app.register_blueprint(answer_views.bp)
     app.register_blueprint(auth_views.bp)   # auth_views blueprint 등록
     app.register_blueprint(comment_views.bp) # 블루프린트 추가하기
+    app.register_blueprint(vote_views.bp)   # vote_views의 bp 추가
 
     from .filter import format_datetime
     # 필터 등록

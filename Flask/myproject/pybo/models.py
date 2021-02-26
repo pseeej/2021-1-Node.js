@@ -3,6 +3,13 @@
 # __init__.py에서 생성한 SQLAlchemy 객체 import
 from pybo import db
 
+# N:N 관계 정의 위해 db.Table class로 정의하는 table 객체
+question_voter = db.Table(
+    'question_voter',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), primary_key = True),
+    db.Column('question_id', db.Integer, db.ForeignKey('question.id', ondelete='CASCADE'), primary_key=True)
+)
+
 # 질문 모델 생성
 class Question(db.Model):   # 모든 모델의 기본 클래스인 db.Model 상속받음.
     # 질문 모델 생성. 속성 = db.Column(데이터 타입, ~)
@@ -12,6 +19,10 @@ class Question(db.Model):   # 모든 모델의 기본 클래스인 db.Model 상�
     content = db.Column(db.Text(), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
     modify_date = db.Column(db.DateTime(), nullable=True)
+    # secondary 설정으로 voter는 N:N 관계이며 question_voter 테이블 참조함을 알려줌
+    # 어떤 계정이 a_user라는 객체로 참조되면 backref에 의해 a_user.question_voter_set으로 질문 구할 수 있게 됨
+    # backref 설정에 사용하는 이름은 중복 불가
+    voter = db.relationship('User', secondary=question_voter, backref=db.backref('question_voter_set'))
 
     # question model에 user_id, user field 추가
     # user_id : User model data의 id값을 Question model에 포함시키기 위함
@@ -19,6 +30,13 @@ class Question(db.Model):   # 모든 모델의 기본 클래스인 db.Model 상�
     # user : Question model에서 User model을 참조하기 위한 field
     # backref로 User model data 통해 Question model data 참조
     user = db.relationship('User', backref=db.backref('question_set'))
+
+# answer_voter table 객체
+answer_voter = db.Table(
+    'answer_voter',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), primary_key=True),
+    db.Column('answer_id', db.Integer, db.ForeignKey('answer.id', ondelete='CASCADE'), primary_key=True)
+)
 
 # 답변 모델 생성
 class Answer(db.Model):
@@ -36,6 +54,7 @@ class Answer(db.Model):
     content = db.Column(db.Text(), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
     modify_date = db.Column(db.DateTime(), nullable=True)
+    voter = db.relationship('User', secondary=answer_voter, backref=db.backref('answer_voter_set'))
 
     # answer model에 field 추가
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
