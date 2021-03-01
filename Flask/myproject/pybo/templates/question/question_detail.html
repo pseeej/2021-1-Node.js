@@ -31,7 +31,7 @@
             <div class="card">
                 <div class="card-body">
                     <!-- style = "white-space : pre-line"으로 글 내용의 줄바꿈 제대로 보여줌 -->
-                    <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
+                    <div class="card-text">{{ question.content | markdown }}</div>
                     <!-- d-flex-justify-content-end : 컴포넌트 오른쪽 정렬 -->
                     <div class="d-flex justify-content-end">
                         <!-- 작성일시 왼쪽에 수정일시 추가 -->
@@ -115,7 +115,7 @@
         <div class="col-11">
             <div class="card">
                 <div class="card-body">
-                    <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
+                    <div class="card-text">{{ answer.content|markdown }}</div>
                     <div class="d-flex justify-content-end">
 
                         {% if answer.modify_date %}
