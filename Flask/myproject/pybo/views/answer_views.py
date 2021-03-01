@@ -30,9 +30,11 @@ def create(question_id):
         # question과 answer 모델이 연결되어 있어 backref에 설정한 answer_set 사용 가능
         question.answer_set.append(answer)
         db.session.commit()
-        return redirect(url_for('question.detail', question_id=question_id))
+        # anchor element로 이동할 수 있도록 redirect 수정
+        return redirect('{}#answer_{}'.format(url_for('question.detail', question_id=question_id), answer.id))
         
     # 답변 생성 후 화면 이동하도록 redirect 함수 사용함
+    # anchor element로 이동할 수 있도록 redirect 수정
     return redirect(url_for('question/question.detail', question=question, form=form))
 
 
@@ -50,7 +52,8 @@ def modify(answer_id):
             form.populate_obj(answer)   # form 변수에 있는 데이터를 question 객체에 적용
             answer.modify_date = datetime.now() # 수정 일시 저장
             db.session.commit()
-            return redirect(url_for('question.detail', question_id = answer.question.id))
+            # anchor element로 이동할 수 있도록 redirect 수정
+            return redirect('{}#answer_{}'.format(url_for('question.detail', question_id = answer.question.id), answer.id))
     else:   # 기존 답변 내용 불러오기
         form = AnswerForm(obj=answer)
     return render_template('answer/answer_form.html', answer=answer, form=form)
